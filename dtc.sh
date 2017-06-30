@@ -51,7 +51,7 @@ make O=out ARCH=arm64 $DEFCONFIG
 echo -e "\nStarting compilation...\n"
 make -j$(nproc --all) O=out ARCH=arm64 LD_LIBRARY_PATH="${DTC_DIR}/lib:${LD_LIBRARY_PATH}" CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabihf- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
 
-if [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
+if [ -f "out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "out/arch/arm64/boot/dtbo.img" ]; then
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
 if [ -d "$AK3_DIR" ]; then
 cp -r $AK3_DIR AnyKernel3
@@ -60,6 +60,7 @@ echo -e "\nAnyKernel3 repo not found locally and cloning failed! Aborting..."
 exit 1
 fi
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
+cp out/arch/arm64/boot/dtbo.img AnyKernel3
 rm -f *zip
 cd AnyKernel3
 git checkout master &> /dev/null
