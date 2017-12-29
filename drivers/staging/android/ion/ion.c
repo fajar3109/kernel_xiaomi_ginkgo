@@ -1291,8 +1291,11 @@ void ion_device_add_heap(struct ion_device *dev, struct ion_heap *heap)
 	if (heap->flags & ION_HEAP_FLAG_DEFER_FREE)
 		ion_heap_init_deferred_free(heap);
 
-	if ((heap->flags & ION_HEAP_FLAG_DEFER_FREE) || heap->ops->shrink)
-		ion_heap_init_shrinker(heap);
+	if ((heap->flags & ION_HEAP_FLAG_DEFER_FREE) || heap->ops->shrink) {
+		ret = ion_heap_init_shrinker(heap);
+		if (ret)
+			pr_err("%s: Failed to register shrinker\n", __func__);
+	}
 
 	heap->dev = dev;
 	down_write(&dev->lock);
