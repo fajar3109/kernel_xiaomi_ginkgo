@@ -138,7 +138,7 @@ static void print_cmdline(void)
  */
 static void print_config(const char *m, int slen)
 {
-	int c, i;
+	int c, prev_c = '/', i;
 
 	printf("    $(wildcard include/config/");
 	for (i = 0; i < slen; i++) {
@@ -147,7 +147,9 @@ static void print_config(const char *m, int slen)
 			c = '/';
 		else
 			c = tolower(c);
-		putchar(c);
+		if (c != '/' || prev_c != '/')
+			putchar(c);
+		prev_c = c;
 	}
 	printf(".h) \\\n");
 }
