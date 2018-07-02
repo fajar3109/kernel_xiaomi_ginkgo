@@ -420,8 +420,10 @@ static int dvb_register_media_device(struct dvb_device *dvbdev,
 	if (!dvbdev->entity)
 		return 0;
 
-	link = media_create_intf_link(dvbdev->entity, &dvbdev->intf_devnode->intf,
-				      MEDIA_LNK_FL_ENABLED);
+	link = media_create_intf_link(dvbdev->entity,
+				      &dvbdev->intf_devnode->intf,
+				      MEDIA_LNK_FL_ENABLED |
+				      MEDIA_LNK_FL_IMMUTABLE);
 	if (!link)
 		return -ENOMEM;
 #endif
@@ -579,7 +581,8 @@ static int dvb_create_io_intf_links(struct dvb_adapter *adap,
 			if (strncmp(entity->name, name, strlen(name)))
 				continue;
 			link = media_create_intf_link(entity, intf,
-						      MEDIA_LNK_FL_ENABLED);
+						      MEDIA_LNK_FL_ENABLED |
+						      MEDIA_LNK_FL_IMMUTABLE);
 			if (!link)
 				return -ENOMEM;
 		}
@@ -734,14 +737,16 @@ int dvb_create_media_graph(struct dvb_adapter *adap,
 	media_device_for_each_intf(intf, mdev) {
 		if (intf->type == MEDIA_INTF_T_DVB_CA && ca) {
 			link = media_create_intf_link(ca, intf,
-						      MEDIA_LNK_FL_ENABLED);
+						      MEDIA_LNK_FL_ENABLED |
+						      MEDIA_LNK_FL_IMMUTABLE);
 			if (!link)
 				return -ENOMEM;
 		}
 
 		if (intf->type == MEDIA_INTF_T_DVB_FE && tuner) {
 			link = media_create_intf_link(tuner, intf,
-						      MEDIA_LNK_FL_ENABLED);
+						      MEDIA_LNK_FL_ENABLED |
+						      MEDIA_LNK_FL_IMMUTABLE);
 			if (!link)
 				return -ENOMEM;
 		}
@@ -753,7 +758,8 @@ int dvb_create_media_graph(struct dvb_adapter *adap,
 		 */
 		if (intf->type == MEDIA_INTF_T_DVB_DVR && demux) {
 			link = media_create_intf_link(demux, intf,
-						      MEDIA_LNK_FL_ENABLED);
+						      MEDIA_LNK_FL_ENABLED |
+						      MEDIA_LNK_FL_IMMUTABLE);
 			if (!link)
 				return -ENOMEM;
 		}
