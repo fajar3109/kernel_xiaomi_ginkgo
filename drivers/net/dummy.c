@@ -45,7 +45,7 @@
 #undef pr_fmt
 #define pr_fmt(fmt) DRV_NAME ": " fmt
 
-static int numdummies = 1;
+static int numdummies = 0;
 static int num_vfs;
 
 struct vf_data_storage {
