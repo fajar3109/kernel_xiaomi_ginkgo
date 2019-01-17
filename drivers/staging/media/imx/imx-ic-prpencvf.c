@@ -366,8 +366,7 @@ static int prp_setup_channel(struct prp_priv *priv,
 
 	memset(&image, 0, sizeof(image));
 	image.pix = vdev->fmt.fmt.pix;
-	image.rect.width = image.pix.width;
-	image.rect.height = image.pix.height;
+	image.rect = vdev->compose;
 
 	if (rot_swap_width_height) {
 		swap(image.pix.width, image.pix.height);

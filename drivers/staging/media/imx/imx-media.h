@@ -109,6 +109,8 @@ struct imx_media_video_dev {
 
 	/* the user format */
 	struct v4l2_format fmt;
+	/* the compose rectangle */
+	struct v4l2_rect compose;
 	const struct imx_media_pixfmt *cc;
 };
 
