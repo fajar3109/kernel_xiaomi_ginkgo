@@ -42,9 +42,9 @@ struct boost_drv {
 	wait_queue_head_t boost_waitq;
 	atomic_long_t max_boost_expires;
 	unsigned long state;
+	unsigned long last_input_jiffies;
 	unsigned int min_freq_lp;
 	unsigned int min_freq_perf;
-	unsigned long last_input_jiffies;
 };
 
 static void input_unboost_worker(struct work_struct *work);
@@ -261,7 +261,10 @@ static void cpu_input_boost_input_event(struct input_handle *handle,
 	struct boost_drv *b = handle->handler->private;
 
 	__cpu_input_boost_kick(b);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8442826ab165 (drivers: cpufreq: cpu_input_boost: Track input event times and expose timeout helper)
 	b->last_input_jiffies = jiffies;
 }
 
