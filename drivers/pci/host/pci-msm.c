@@ -5260,7 +5260,7 @@ static int32_t msm_pcie_irq_init(struct msm_pcie_dev_t *dev)
 		rc = devm_request_irq(pdev,
 			dev->irq[MSM_PCIE_INT_LINK_DOWN].num,
 			handle_linkdown_irq,
-			IRQF_TRIGGER_RISING,
+			IRQF_TRIGGER_RISING | IRQF_NO_THREAD,
 			dev->irq[MSM_PCIE_INT_LINK_DOWN].name,
 			dev);
 		if (rc) {
