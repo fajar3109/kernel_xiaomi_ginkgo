@@ -1134,6 +1134,16 @@ config ARCH_HAS_REFCOUNT_FULL
 	  sense to even offer CONFIG_REFCOUNT_FULL as a user selectable
 	  option.
 
+config ARCH_HAS_REFCOUNT_FULL
+	bool
+	select ARCH_HAS_REFCOUNT
+	help
+	  An architecture selects this when the optimized refcount_t
+	  implementation it provides covers all the cases that
+	  CONFIG_REFCOUNT_FULL covers as well, in which case it makes no
+	  sense to even offer CONFIG_REFCOUNT_FULL as a user selectable
+	  option.
+
 config ARCH_HAS_REFCOUNT
 	bool
 	help
