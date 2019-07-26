@@ -501,8 +501,8 @@ ifdef builtin-target
 ifdef CONFIG_LTO_CLANG
   ifdef CONFIG_MODVERSIONS
     # combine symversions for later processing
-    update_lto_symversions =				\
-	rm -f $@.symversions; 				\
+    update_lto_symversions =						\
+	rm -f $@.symversions; 						\
 	for i in $(foreach n,						\
 			$(filter-out FORCE,$^),				\
 			$(if $(wildcard $(n).symversions),$(n))); do	\
