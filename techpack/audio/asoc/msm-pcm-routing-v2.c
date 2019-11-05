@@ -23626,6 +23626,8 @@ static const struct snd_soc_dapm_route intercon_mi2s[] = {
 	{"PRI_MI2S_RX Port Mixer", "SLIM_0_TX", "SLIMBUS_0_TX"},
 	{"PRI_MI2S_RX Port Mixer", "INTERNAL_FM_TX", "INT_FM_TX"},
 	{"PRI_MI2S_RX Port Mixer", "INTERNAL_BT_SCO_TX", "INT_BT_SCO_TX"},
+	//Add for mic2 to speaker loopback test lct_20190501
+	{"PRI_MI2S_RX Port Mixer", "TX_CDC_DMA_TX_3", "TX_CDC_DMA_TX_3"},
 	{"PRI_MI2S_RX Port Mixer", "SLIM_8_TX", "SLIMBUS_8_TX"},
 #ifndef CONFIG_AUXPCM_DISABLE
 	{"PRI_MI2S_RX Port Mixer", "SEC_AUX_PCM_UL_TX", "SEC_AUX_PCM_TX"},
