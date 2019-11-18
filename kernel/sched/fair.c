@@ -12092,10 +12092,12 @@ static inline bool nohz_kick_needed(struct rq *rq, bool only_update)
 	 * is overutilized and has 2 tasks. The misfit task migration
 	 * happens from the tickpath.
 	 */
-	if (likely(energy_aware)) {
-		if (rq->nr_running >= 2 && cpu_overutilized(cpu))
-			return true;
-	}
+	if (rq->nr_running >= 2 &&
+	    (!energy_aware() || cpu_overutilized(cpu)))
+		return true;
+
+	if (energy_aware())
+		return rq->misfit_task_load > 0;
 
 	rcu_read_lock();
 	sds = rcu_dereference(per_cpu(sd_llc_shared, cpu));
