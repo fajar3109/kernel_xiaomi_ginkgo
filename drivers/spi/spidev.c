@@ -166,6 +166,7 @@ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 
 	mutex_lock(&spidev->buf_lock);
 
+//begin liuhongtao added for buffer kmalloc size
 	if (!spidev->rx_buffer) {
 		spidev->rx_buffer = kmalloc(bufsiz, GFP_KERNEL);
 		if (!spidev->rx_buffer) {
@@ -174,6 +175,7 @@ spidev_read(struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 			goto read_unlock;
 		}
 	}
+//end liuhongtao added for buffer kmalloc size
 
 	status = spidev_sync_read(spidev, count);
 	if (status > 0) {
