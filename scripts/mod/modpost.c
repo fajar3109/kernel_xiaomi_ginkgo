@@ -173,7 +173,7 @@ struct symbol {
 				    *  (only for external modules) **/
 	unsigned int preloaded:1;  /* 1 if symbol from Module.symvers, or crc */
 	enum export  export;       /* Type of export */
-	char name[0];
+	char name[];
 };
 
 static struct symbol *symbolhash[SYMBOL_HASH_SIZE];
