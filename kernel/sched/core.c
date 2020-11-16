@@ -5140,7 +5140,7 @@ bool is_sched_lib_based_app(pid_t pid)
 	if (strnlen(sched_lib_name, LIB_PATH_LENGTH) == 0)
 		return false;
 
-	tmp_lib_name = kmalloc(LIB_PATH_LENGTH, GFP_KERNEL);
+	tmp_lib_name = kmalloc(LIB_PATH_LENGTH, GFP_ATOMIC);
 	if (!tmp_lib_name)
 		return false;
 
