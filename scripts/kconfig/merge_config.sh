@@ -33,12 +33,17 @@ usage() {
 	echo "  -n    use allnoconfig instead of alldefconfig"
 	echo "  -r    list redundant entries when merging fragments"
 	echo "  -O    dir to put generated output files.  Consider setting \$KCONFIG_CONFIG instead."
+	echo "  -s    strict mode. Fail if the fragment redefines any value."
+	echo
+	echo "Used prefix: '$CONFIG_PREFIX'. You can redefine it with \$CONFIG_ environment variable."
 }
 
 RUNMAKE=true
 ALLTARGET=alldefconfig
 WARNREDUN=false
 OUTPUT=.
+STRICT=false
+CONFIG_PREFIX=${CONFIG_-CONFIG_}
 
 while true; do
 	case $1 in
@@ -69,6 +74,11 @@ while true; do
 			exit 1
 		fi
 		shift 2
+		continue
+		;;
+	"-s")
+		STRICT=true
+		shift
 		continue
 		;;
 	*)
@@ -123,6 +133,9 @@ for MERGE_FILE in $MERGE_LIST ; do
 			echo Previous  value: $PREV_VAL
 			echo New value:       $NEW_VAL
 			echo
+			if [ "$STRICT" = "true" ]; then
+				STRICT_MODE_VIOLATED=true
+			fi
 		elif [ "$WARNREDUN" = "true" ]; then
 			echo Value of $CFG is redundant by fragment $MERGE_FILE:
 		fi
@@ -130,6 +143,11 @@ for MERGE_FILE in $MERGE_LIST ; do
 	done
 	cat $MERGE_FILE >> $TMP_FILE
 done
+
+if [ "$STRICT_MODE_VIOLATED" = "true" ]; then
+	echo "The fragment redefined a value and strict mode had been passed."
+	exit 1
+fi
 
 if [ "$RUNMAKE" = "false" ]; then
 	cp -T -- "$TMP_FILE" "$KCONFIG_CONFIG"
