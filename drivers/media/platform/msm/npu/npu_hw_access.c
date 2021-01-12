@@ -106,7 +106,7 @@ uint32_t npu_qfprom_reg_read(struct npu_device *npu_dev, uint32_t off)
  * -------------------------------------------------------------------------
  */
 void npu_mem_write(struct npu_device *npu_dev, void *dst, void *src,
-	uint32_t size)
+	size_t size)
 {
 	size_t dst_off = (size_t)dst;
 	uint32_t *src_ptr32 = (uint32_t *)src;
@@ -141,7 +141,7 @@ void npu_mem_write(struct npu_device *npu_dev, void *dst, void *src,
 }
 
 int32_t npu_mem_read(struct npu_device *npu_dev, void *src, void *dst,
-	uint32_t size)
+	size_t size)
 {
 	size_t src_off = (size_t)src;
 	uint32_t *out32 = (uint32_t *)dst;
