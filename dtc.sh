@@ -1,5 +1,5 @@
 SECONDS=0 # builtin bash timer
-ZIPNAME="simplekernel-R-4.14.258-ginkgo-DTC-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="simplekernel-R-4.14.260-ginkgo-DTC-$(date '+%Y%m%d-%H%M').zip"
 DTC_DIR="/workspace/Gitpod-Workspaces/dragontc-clang"
 GCC_DIR="/workspace/Gitpod-Workspaces/gcc"
 GCC64_DIR="/workspace/Gitpod-Workspaces/gcc64"
