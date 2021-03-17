@@ -1793,4 +1793,3 @@ MODULE_AUTHOR("Yannick Fertre <yannick.fertre@st.com>");
 MODULE_AUTHOR("Hugues Fruchet <hugues.fruchet@st.com>");
 MODULE_DESCRIPTION("STMicroelectronics STM32 Digital Camera Memory Interface driver");
 MODULE_LICENSE("GPL");
-MODULE_SUPPORTED_DEVICE("video");

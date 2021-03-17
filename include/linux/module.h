@@ -27,9 +27,6 @@
 /* In stripped ARM and x86-64 modules, ~ is surprisingly rare. */
 #define MODULE_SIG_STRING "~Module signature appended~\n"
 
-/* Not Yet Implemented */
-#define MODULE_SUPPORTED_DEVICE(name)
-
 #define MODULE_NAME_LEN MAX_PARAM_PREFIX_LEN
 
 struct modversion_info {
