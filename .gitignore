@@ -130,3 +130,8 @@ kernel/configs/android-*.cfg
 #Ignoring Android.bp link file
 #
 Android.bp
+
+# Local files
+*log*
+out/
+*sh
