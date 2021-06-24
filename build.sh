@@ -33,7 +33,7 @@ cd ..
 rm -rf AnyKernel3
 echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
 curl --upload-file $ZIPNAME http://transfer.sh/$ZIPNAME; echo
-fi
+else
 echo "Zip: $ZIPNAME"
 fi
 rm -rf out/arch/arm64/boot
