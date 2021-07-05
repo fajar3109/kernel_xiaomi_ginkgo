@@ -134,3 +134,4 @@ Android.bp
 *log*
 out/
 *sh
+*.zip
