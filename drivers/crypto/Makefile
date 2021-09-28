@@ -47,3 +47,9 @@ obj-$(CONFIG_CRYPTO_DEV_VMX) += vmx/
 obj-$(CONFIG_CRYPTO_DEV_BCM_SPU) += bcm/
 obj-$(CONFIG_CRYPTO_DEV_SAFEXCEL) += inside-secure/
 obj-$(CONFIG_CRYPTO_DEV_ARTPEC6) += axis/
+
+ifeq ($(cc-name),gcc)
+ccflags-y += -mtune=cortex-a73.cortex-a53 -march=armv8-a+crc+crypto
+else ifeq ($(cc-name),clang)
+ccflags-y += -mcpu=cortex-a53 -mtune=cortex-a53+crc+crypto
+endif
