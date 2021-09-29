@@ -589,12 +589,14 @@ static int fpc_fb_notif_callback(struct notifier_block *nb,
     if (evdata && evdata->data && val == MSM_DRM_EVENT_BLANK) {
 		blank = evdata->data;
 		if (*blank == MSM_DRM_BLANK_UNBLANK) {
+			set_fingerprintd_nice(0);
 			fpc1020->fb_black = false;
 		}
 	}
 	else if (evdata && evdata->data && val == MSM_DRM_EARLY_EVENT_BLANK) {
 		blank = evdata->data;
 		if (*blank == MSM_DRM_BLANK_POWERDOWN) {
+			set_fingerprintd_nice(MIN_NICE);
 			fpc1020->fb_black = true;
 		}
 	}
