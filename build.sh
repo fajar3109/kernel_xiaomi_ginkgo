@@ -1,6 +1,6 @@
 export PATH="$HOME/proton/bin:$PATH"
 SECONDS=0
-ZIPNAME="SurgeX-ginkgo-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="simplekernel-11.0-ginkgo-$(date '+%Y%m%d-%H%M').zip"
 
 if ! [ -d "$HOME/proton" ]; then
 echo "Proton clang not found! Cloning..."
@@ -22,19 +22,18 @@ echo -e "\nStarting compilation...\n"
 make -j$(nproc --all) O=out ARCH=arm64 CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- Image.gz-dtb dtbo.img
 fi
 
-if [ -f "out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "out/arch/arm64/boot/dtbo.img" ]; then
+if [ -f "out/arch/arm64/boot/Image.gz" ] && [ -f "out/arch/arm64/boot/dtbo.img" ]; then
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
-git clone -q https://github.com/madmax7896/AnyKernel3
-cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
+git clone -q https://github.com/fajar0031/AnyKernel3
+cp out/arch/arm64/boot/Image.gz AnyKernel3
 cp out/arch/arm64/boot/dtbo.img AnyKernel3
 cd AnyKernel3
 zip -r9 "../$ZIPNAME" * -x '*.git*' README.md *placeholder
 cd ..
 rm -rf AnyKernel3
 echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
-if command -v gdrive &> /dev/null; then
-gdrive upload --share $ZIPNAME
-else
+curl --upload-file $ZIPNAME http://transfer.sh/$ZIPNAME; echo
+fi
 echo "Zip: $ZIPNAME"
 fi
 rm -rf out/arch/arm64/boot
