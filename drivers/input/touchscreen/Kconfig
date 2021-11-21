@@ -1308,6 +1308,13 @@ source "drivers/input/touchscreen/nt36xxx_spi_c3j/Kconfig"
 
 source "drivers/input/touchscreen/ft8719_spi_c3j/Kconfig"
 
+config SPI_XIAOMI_TP
+	bool
+	depends on SPI
+	default y if TOUCHSCREEN_NT36xxx_HOSTDL_SPI
+	help
+	Say Y if want use xiaomi touch panel.
+
 config TOUCHSCREEN_COMMON
 	bool "Common touchscreen interface to interact with userspace"
 	default y
