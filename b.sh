@@ -1,5 +1,5 @@
 SECONDS=0 # builtin bash timer
-ZIPNAME="simplekernel-11.0-ginkgo-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="simplekernel-R-4.14.258-A11-ginkgo-$(date '+%Y%m%d-%H%M').zip"
 TC_DIR="/workspace/Gitpod-Workspaces/proton"
 AK3_DIR="/workspace/Gitpod-Workspaces/AnyKernel3"
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
