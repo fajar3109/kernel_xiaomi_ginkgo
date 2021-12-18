@@ -47,7 +47,6 @@
 		qcom,mdss-dsi-reset-sequence = <1 10>, <0 10>, <1 10>;
 		qcom,mdss-pan-physical-width-dimension = <67>;
 		qcom,mdss-pan-physical-height-dimension = <145>;
-		qcom,panel-allow-phy-poweroff;
 
 		qcom,panel-allow-phy-poweroff;
 
