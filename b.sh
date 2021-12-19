@@ -50,8 +50,8 @@ cd ..
 rm -rf AnyKernel3
 echo -e "\nCompleted in $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
 echo "Zip: $ZIPNAME"
-if ! [[ $HOSTNAME = "Gitpod" && $USER = "fajar" ]]; then
-curl --upload-file $ZIPNAME http://transfer.sh/$ZIPNAME; echo
+if ! [[ $HOSTNAME = "gitpod" && $USER = "fajar" ]]; then
+curl -T $ZIPNAME temp.sh; echo
 fi
 else
 echo -e "\nCompilation failed!"

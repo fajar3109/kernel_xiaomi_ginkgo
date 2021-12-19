@@ -1,6 +1,5 @@
-#!/bin/bash
 SECONDS=0 # builtin bash timer
-ZIPNAME="simplekernel-R-4.14.258-ginkgo-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="simplekernel-R-4.14.258-ginkgo-DTC-$(date '+%Y%m%d-%H%M').zip"
 DTC_DIR="/workspace/Gitpod-Workspaces/dragontc-clang"
 GCC_DIR="/workspace/Gitpod-Workspaces/gcc"
 GCC64_DIR="/workspace/Gitpod-Workspaces/gcc64"
@@ -10,7 +9,7 @@ DEFCONFIG="vendor/ginkgo-perf_defconfig"
 export PATH="${DTC_DIR}/bin:${GCC64_DIR}/bin:${GCC_DIR}/bin:/usr/bin:${PATH}"
 
 if ! [ -d "$DTC_DIR" ]; then
-echo "Aosp clang not found! Cloning to $DTC_DIR..."
+echo "DTC clang not found! Cloning to $DTC_DIR..."
 if ! git clone https://github.com/NusantaraDevs/DragonTC -b daily/10.0 --depth=1 $DTC_DIR; then
 echo "Cloning failed! Aborting..."
 exit 1
