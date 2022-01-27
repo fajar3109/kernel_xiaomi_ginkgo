@@ -18,7 +18,7 @@ fi
 
 if ! [ -d "$GCC64_DIR" ]; then
 echo "GCC 64 not found! Cloning to $GCC64_DIR..."
-if ! git clone https://github.com/fajar3109/aarch64-linux-android-4.9 -b 12 --depth=1 $GCC64_DIR; then
+if ! git clone https://github.com/fajar3109/aarch64-linux-android-4.9 -b main --depth=1 $GCC64_DIR; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
@@ -26,7 +26,7 @@ fi
 
 if ! [ -d "$GCC_DIR" ]; then
 echo "GCC not found! Cloning to $GCC_DIR..."
-if ! git clone https://github.com/fajar3109/arm-linux-androideabi-4.9 -b 12  --depth=1 $GCC_DIR; then
+if ! git clone https://github.com/fajar3109/arm-linux-androideabi-4.9 -b main --depth=1 $GCC_DIR; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
