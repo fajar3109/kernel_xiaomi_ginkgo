@@ -18,7 +18,7 @@ fi
 
 if ! [ -d "$GCC64_DIR" ]; then
 echo "GCC 64 not found! Cloning to $GCC64_DIR..."
-if ! git clone https://github.com/ZyCromerZ/aarch64-zyc-linux-gnu -b 12 --depth=1 $GCC64_DIR; then
+if ! git clone https://github.com/fajar3109/aarch64-linux-android-4.9 -b 12 --depth=1 $GCC64_DIR; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
@@ -26,7 +26,7 @@ fi
 
 if ! [ -d "$GCC_DIR" ]; then
 echo "GCC not found! Cloning to $GCC_DIR..."
-if ! git clone https://github.com/ZyCromerZ/arm-zyc-linux-gnueabi -b 12  --depth=1 $GCC_DIR; then
+if ! git clone https://github.com/fajar3109/arm-linux-androideabi-4.9 -b 12  --depth=1 $GCC_DIR; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
@@ -49,7 +49,7 @@ mkdir -p out
 make O=out ARCH=arm64 $DEFCONFIG
 
 echo -e "\nStarting compilation...\n"
-make -j$(nproc --all) O=out ARCH=arm64 LD_LIBRARY_PATH="${GC_DIR}/lib:${LD_LIBRARY_PATH}" CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-zyc-linux-gnu- CROSS_COMPILE_ARM32=arm-zyc-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
+make -j$(nproc --all) O=out ARCH=arm64 LD_LIBRARY_PATH="${SDC_DIR}/lib:${LD_LIBRARY_PATH}" CC=clang LD=ld.lld AR=llvm-ar AS=llvm-as NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-android- CROSS_COMPILE_ARM32=arm-linux-androideabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
 
 if [ -f "out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "out/arch/arm64/boot/dtbo.img" ]; then
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
