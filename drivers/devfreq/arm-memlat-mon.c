@@ -100,7 +100,6 @@ static inline unsigned long read_event(struct event_data *event)
 	if (!event->pevent)
 		return 0;
 
-	total = perf_event_read_value(event->pevent, &enabled, &running);
 	ev_count = total - event->prev_count;
 	event->prev_count = total;
 	return ev_count;
@@ -201,9 +200,6 @@ static int set_events(struct cpu_grp_info *cpu_grp, int cpu)
 		if (!event_id)
 			continue;
 
-		attr->config = event_id;
-		pevent = perf_event_create_kernel_counter(attr, cpu, NULL,
-							  NULL, NULL);
 		if (IS_ERR(pevent))
 			goto err_out;
 		cpustats->events[i].pevent = pevent;
