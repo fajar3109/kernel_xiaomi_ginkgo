@@ -5,7 +5,7 @@ normal=$(tput sgr0)
 echo -e "${bold}Compile Sedang Berlangsung...${normal}"
 
 SECONDS=0 # builtin bash timer
-ZIPNAME="GabutKernel-DevBuild-R-ginkgo-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="GabutKernel./v1.5-A11-4.14.266-ginkgo-$(date '+%Y%m%d-%H%M').zip"
 SDC_DIR="/workspace/Gitpod-Workspaces/sdc-clang"
 GCC_DIR="/workspace/Gitpod-Workspaces/gccZ"
 GCC64_DIR="/workspace/Gitpod-Workspaces/gcc64Z"
