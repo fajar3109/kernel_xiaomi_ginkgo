@@ -61,7 +61,7 @@ if [ -f "out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "out/arch/arm64/boot/dtbo.i
 echo -e "\nKernel Sukses Di Compile! Zipping up...\n"
 if [ -d "$AK3_DIR" ]; then
 cp -r $AK3_DIR AnyKernel3
-elif ! git clone -q -b gabut https://github.com/fajar3109/AnyKernel3; then
+elif ! git clone -q -b elainaX https://github.com/fajar3109/AnyKernel3; then
 echo -e "${bold}Direktori AnyKernel3 Sudah Ada, Tidak Perlu di Clone${normal}"
 exit 1
 fi
