@@ -5,10 +5,10 @@ normal=$(tput sgr0)
 echo -e "${bold}Compile Sedang Berlangsung...${normal}"
 
 SECONDS=0 # builtin bash timer
-ZIPNAME="elainaXkernel-4.14.273-R-ginkgo-$(date '+%Y%m%d-%H%M').zip"
+ZIPNAME="elainaXkernel-4.14.274-R-ginkgo-$(date '+%Y%m%d-%H%M').zip"
 SDC_DIR="/workspace/Gitpod-Workspaces/sdc-clang"
-GCC_DIR="/workspace/Gitpod-Workspaces/gccZ"
-GCC64_DIR="/workspace/Gitpod-Workspaces/gcc64Z"
+GCC_DIR="/workspace/Gitpod-Workspaces/gcc"
+GCC64_DIR="/workspace/Gitpod-Workspaces/gcc64"
 AK3_DIR="./flasher"
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
 
