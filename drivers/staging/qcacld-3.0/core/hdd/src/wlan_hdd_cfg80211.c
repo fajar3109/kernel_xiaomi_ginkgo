@@ -460,6 +460,8 @@ static const u32 hdd_sta_akm_suites[] = {
 	WLAN_AKM_SUITE_FT_EAP_SHA_384,
 	RSN_AUTH_KEY_MGMT_CCKM,
 	RSN_AUTH_KEY_MGMT_OSEN,
+	WAPI_PSK_AKM_SUITE,
+	WAPI_CERT_AKM_SUITE,
 };
 
 /*akm suits supported by AP*/
@@ -16624,7 +16626,10 @@ QDF_STATUS wlan_hdd_update_wiphy_supported_band(struct hdd_context *hdd_ctx)
 	    cfg->dot11Mode != eHDD_DOT11_MODE_11ax_ONLY)
 		 wlan_hdd_band_5_ghz.vht_cap.vht_supported = 0;
 
-	hdd_init_6ghz(hdd_ctx);
+	if (cfg->dot11Mode == eHDD_DOT11_MODE_AUTO ||
+	    cfg->dot11Mode == eHDD_DOT11_MODE_11ax ||
+	    cfg->dot11Mode == eHDD_DOT11_MODE_11ax_ONLY)
+		hdd_init_6ghz(hdd_ctx);
 
 	return QDF_STATUS_SUCCESS;
 }
@@ -17503,7 +17508,7 @@ static int wlan_hdd_add_key_ibss(struct hdd_adapter *adapter,
 	if (!vdev)
 		return -EINVAL;
 	errno = wlan_cfg80211_crypto_add_key(vdev, WLAN_CRYPTO_KEY_TYPE_GROUP,
-					     key_index);
+					     key_index, false);
 	if (errno) {
 		hdd_err("add_ibss_key failed, errno: %d", errno);
 		hdd_objmgr_put_vdev(vdev);
@@ -17568,10 +17573,11 @@ static int wlan_hdd_add_key_sap(struct hdd_adapter *adapter,
 
 	if (hostapd_state->bss_state == BSS_START) {
 		errno =
-		wlan_cfg80211_crypto_add_key(vdev, (pairwise ?
-					     WLAN_CRYPTO_KEY_TYPE_UNICAST :
-					     WLAN_CRYPTO_KEY_TYPE_GROUP),
-					     key_index);
+		wlan_cfg80211_crypto_add_key(vdev,
+					     (pairwise ?
+					      WLAN_CRYPTO_KEY_TYPE_UNICAST :
+					      WLAN_CRYPTO_KEY_TYPE_GROUP),
+					     key_index, true);
 		if (!errno)
 			wma_update_set_key(adapter->vdev_id, pairwise,
 					   key_index, cipher);
@@ -17604,7 +17610,7 @@ static int wlan_hdd_add_key_sta(struct hdd_adapter *adapter,
 	errno = wlan_cfg80211_crypto_add_key(vdev, (pairwise ?
 					     WLAN_CRYPTO_KEY_TYPE_UNICAST :
 					     WLAN_CRYPTO_KEY_TYPE_GROUP),
-					     key_index);
+					     key_index, true);
 	hdd_objmgr_put_vdev(vdev);
 	if (!errno && adapter->send_mode_change) {
 		wlan_hdd_send_mode_change_event();
@@ -17684,6 +17690,9 @@ static int __wlan_hdd_cfg80211_add_key(struct wiphy *wiphy,
 	cipher = osif_nl_to_crypto_cipher_type(params->cipher);
 	if (pairwise)
 		wma_set_peer_ucast_cipher(mac_address.bytes, cipher);
+
+	cdp_peer_flush_frags(cds_get_context(QDF_MODULE_ID_SOC),
+			     wlan_vdev_get_id(vdev), mac_address.bytes);
 
 	switch (adapter->device_mode) {
 	case QDF_IBSS_MODE:
@@ -17987,7 +17996,7 @@ static int __wlan_hdd_cfg80211_set_default_key(struct wiphy *wiphy,
 		wlan_cfg80211_crypto_add_key(adapter->vdev, (unicast ?
 					     WLAN_CRYPTO_KEY_TYPE_UNICAST :
 					     WLAN_CRYPTO_KEY_TYPE_GROUP),
-					     key_index);
+					     key_index, true);
 		wma_update_set_key(adapter->vdev_id, unicast, key_index,
 				   crypto_key->cipher_type);
 	}
@@ -21538,6 +21547,11 @@ int wlan_hdd_disconnect(struct hdd_adapter *adapter, u16 reason,
 	hdd_debug("Disabling queues");
 	wlan_hdd_netif_queue_control(adapter,
 		WLAN_STOP_ALL_NETIF_QUEUE_N_CARRIER, WLAN_CONTROL_PATH);
+
+	/* Disable STA power-save mode */
+	if ((adapter->device_mode == QDF_STA_MODE) &&
+	    wlan_hdd_set_powersave(adapter, false, 0))
+		hdd_debug("Not disable PS for STA");
 
 	ret = wlan_hdd_wait_for_disconnect(mac_handle, adapter, reason,
 					   mac_reason);
