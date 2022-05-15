@@ -158,4 +158,3 @@ config F2FS_FAKE_KERNEL_RELEASE
 config F2FS_FAKE_KERNEL_VERSION
 	string "Kernel version for fsck.f2fs"
 	depends on F2FS_REPORT_FAKE_KERNEL_VERSION
->>>>>>> d495d7a5c99b (f2fs: Add support for reporting a fake kernel version to fsck)
