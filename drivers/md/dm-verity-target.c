@@ -587,6 +587,15 @@ static int verity_verify_io(struct dm_verity_io *io)
 }
 
 /*
+ * Skip verity work in response to I/O error when system is shutting down.
+ */
+static inline bool verity_is_system_shutting_down(void)
+{
+	return system_state == SYSTEM_HALT || system_state == SYSTEM_POWER_OFF
+		|| system_state == SYSTEM_RESTART;
+}
+
+/*
  * End one "io" structure with a given error.
  */
 static void verity_finish_io(struct dm_verity_io *io, blk_status_t status)
@@ -614,7 +623,11 @@ static void verity_end_io(struct bio *bio)
 	struct dm_verity_io *io = bio->bi_private;
 
 	if (bio->bi_status &&
+<<<<<<< HEAD
 		(!verity_fec_is_enabled(io->v) || verity_is_system_shutting_down())) {
+=======
+	    (!verity_fec_is_enabled(io->v) || verity_is_system_shutting_down())) {
+>>>>>>> 27840023b5f3071838596487603c2c6ba6b6de3d
 		verity_finish_io(io, bio->bi_status);
 		return;
 	}
