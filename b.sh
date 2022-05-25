@@ -1,21 +1,18 @@
 SECONDS=0 # builtin bash timer
-ZIPNAME="ElainaKernel-R-GinkLow-$(date '+%Y%m%d-%H%M').zip"
-TC_DIR="/workspace/Gitpod-Workspaces/protonclang"
+ZIPNAME="ElainaKernel-BETA-AOSP-11-GinkLow-$(date '+%Y%m%d-%H%M').zip"
+TC_DIR="/workspace/Gitpod-Workspaces/clang"
 AK3_DIR="/workspace/Gitpod-Workspaces/AnyKernel3"
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
 
 export PATH="$TC_DIR/bin:$PATH"
 
 if ! [ -d "$TC_DIR" ]; then
-echo "Proton clang not found! Cloning to $TC_DIR..."
-if ! git clone -q --depth=1 https://github.com/kdrag0n/proton-clang $TC_DIR; then
+echo "NusantaraDevs clang not found! Cloning to $TC_DIR..."
+if ! git clone -q -b dev/12.0 --depth=1 https://github.com/NusantaraDevs/clang $TC_DIR; then
 echo "Cloning failed! Aborting..."
 exit 1
 fi
 fi
-
-export KBUILD_BUILD_USER=fajar3109
-export KBUILD_BUILD_HOST=gitpod
 
 if [[ $1 = "-r" || $1 = "--regen" ]]; then
 make O=out ARCH=arm64 $DEFCONFIG savedefconfig
