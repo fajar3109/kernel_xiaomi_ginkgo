@@ -175,18 +175,18 @@
 			/* TURBO_L1 */
 			qcom,gpu-pwrlevel@0 {
 				reg = <0>;
-				qcom,gpu-freq = <950000000>;
-				qcom,bus-freq = <11>;
-				qcom,bus-min = <10>;
-				qcom,bus-max = <11>;
+				qcom,gpu-freq = <985000000>;
+				qcom,bus-freq = <12>;
+				qcom,bus-min = <9>;
+				qcom,bus-max = <12>;
 			};
 
 			/* TURBO */
 			qcom,gpu-pwrlevel@1 {
 				reg = <1>;
-				qcom,gpu-freq = <900000000>;
+				qcom,gpu-freq = <910000000>;
 				qcom,bus-freq = <11>;
-				qcom,bus-min = <9>;
+				qcom,bus-min = <10>;
 				qcom,bus-max = <11>;
 			};
 
@@ -203,7 +203,7 @@
 			qcom,gpu-pwrlevel@3 {
 				reg = <3>;
 				qcom,gpu-freq = <745000000>;
-				qcom,bus-freq = <9>;
+				qcom,bus-freq = <10>;
 				qcom,bus-min = <8>;
 				qcom,bus-max = <10>;
 			};
